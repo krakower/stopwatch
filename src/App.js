@@ -1,106 +1,53 @@
 import React from 'react';
-import {component, fragment} from 'react';
-
-let i=0;
+import Buttons from './Buttons.js';
 
 
-
-class StopWatch extends React.Component {
-
+class Selector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isTiming: false,
-      currentTime: 0,
-      leftButtonText: 'Start',
+      timerMode: true,
     };
   }
 
+  timerMode() {
+    this.setState({
+      timerMode: true,
+    });
+  }
 
-  startStop() {
+  stopwatchMode() {
+    this.setState({
+      timerMode: false,
+    });
+  }
 
-    if (this.state.isTiming) {
-      clearInterval(this.interval)
-      this.setState({
-        leftButtonText: 'Start',
-      });
-
+  render() {
+    const timerMode = this.state.timerMode;
+    let leftClassName;
+    let rightClassName;
+    if(timerMode) {
+      leftClassName = "selector left highlighted"
+      rightClassName = "selector right"
     } else {
-      this.setState({
-        leftButtonText: 'Stop',
-      });
-      this.interval = setInterval(() => this.tick(), 100);
+      leftClassName = "selector left"
+      rightClassName = "selector right highlighted"
     }
-
-    this.setState({
-      isTiming: !this.state.isTiming,
-    });
-  }
-
-
-  reset() {
-    clearInterval(this.interval)
-    this.setState({
-      isTiming: false,
-      currentTime: 0,
-      leftButtonText: 'Start'
-    });
-  }
-
-
-  tick() {
-    this.setState({
-      currentTime: this.state.currentTime + 1,
-    });
-  }
-
-
-
-  render() {
-    const isActive = this.props.isTiming;
-    const currentTime = this.props.currentTime;
-    let interval = 0;
-
     return (
-      <div className="stopwatchBody">
-        <Clock currentTime={this.state.currentTime}/>
+      <div className="frame">
         <div className="container">
-          <button onClick={() => this.startStop()}>
-            {this.state.leftButtonText}
+          <button className={leftClassName} onClick={() => this.timerMode()}>
+            Timer
           </button>
-          <button onClick={() => this.reset()}>
-              Reset
+          <button className={rightClassName} onClick={() => this.stopwatchMode()}>
+            Stopwatch
           </button>
         </div>
+        <Buttons timerMode = {this.state.timerMode}/>
       </div>
     )
   }
 }
 
 
-
-
-class Clock extends React.Component {
-
-  render() {
-    const currentTime = this.props.currentTime;
-    const minutes = Math.floor(currentTime / 600);
-    let seconds = Math.floor((currentTime % 600)/10);
-    const deciseconds = Math.floor(currentTime % 10);
-
-    if(seconds < 10) {
-      seconds = '0'.concat(seconds);
-    }
-
-    return (
-      <div className="container">
-        <div className="clockFace">
-          {minutes}:{seconds}<span className="smallTime">.{deciseconds}</span>
-        </div>
-      </div>
-    )
-  }
-}
-
-
-export default StopWatch;
+export default Selector;

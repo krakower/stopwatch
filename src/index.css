@@ -6,12 +6,12 @@ body {
   text-align: center;
 }
 
-.stopwatchBody {
+.frame {
   background-color: #c2c2d6;
   border: 1px solid black;
   border-radius: 10px;
   width: 400px;
-  height: 300px;
+  height: 350px;
   position: fixed;
   top: 30%;
   left: 50%;
@@ -27,9 +27,9 @@ body {
   border-radius: 10px;
   width: 300px;
   height: 100px;
-  z-index: 1;
+  z-index: 3;
   vertical-align: middle;
-  bottom: 50px;
+  bottom: 0px;
   font-size: 90px;
 }
 
@@ -47,7 +47,38 @@ button {
   font-size: 20px;
 }
 
+button.selector {
+  background-color: #9494b8;
+  border: 0px solid black;
+  margin: 0px;
+  width: 200px;
+  height: 45px;
+  display: inline-block;
+  z-index: 1;
+  font-size: 20px;
+  border-bottom: 1px solid black;
+}
+
+button.selector.left {
+  border-radius: 10px 0 0 0;
+}
+
+button.selector.right {
+  border-radius: 0 10px 0 0;
+}
+
+button.selector.highlighted {
+  border-bottom: 4px solid #0000ff;
+  color: #0000ff;
+  background-color:
+}
 
 .smallTime {
   font-size: 44px;
+}
+
+
+.patrick {
+  height: 80%;
+  width: 80%;
 }
