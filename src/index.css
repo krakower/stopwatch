@@ -10,7 +10,7 @@ body {
   background-color: #c2c2d6;
   border: 1px solid black;
   border-radius: 10px;
-  width: 400px;
+  width: 450px;
   height: 350px;
   position: fixed;
   top: 30%;
@@ -25,7 +25,7 @@ body {
   margin: 40px;
   padding: 10px;
   border-radius: 10px;
-  width: 300px;
+  width: 350px;
   height: 100px;
   z-index: 3;
   vertical-align: middle;
@@ -33,7 +33,9 @@ body {
   font-size: 90px;
 }
 
-
+.grayedOut {
+  color: gray;
+}
 
 .button {
   background-color: white;
@@ -51,7 +53,7 @@ button.selector {
   background-color: #9494b8;
   border: 0px solid black;
   margin: 0px;
-  width: 200px;
+  width: 225px;
   height: 45px;
   display: inline-block;
   z-index: 1;

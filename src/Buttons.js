@@ -14,6 +14,8 @@ export default class Buttons extends React.Component {
       alarmOn: false,
       isTimerReset: true,
       timerIsUpdated: true,
+      timerIsEdited: false,
+      editingMode: false,
     };
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
@@ -24,6 +26,7 @@ export default class Buttons extends React.Component {
       this.setState ({
         isTimerReset: false,
         timerIsUpdated: false,
+        editingMode: false,
       });
       if(this.state.timerTime === 0) {
         this.setState ({
@@ -34,6 +37,7 @@ export default class Buttons extends React.Component {
         this.timerInterval = setInterval(() => this.tick('timerTime'), 100);
       } else {
         clearInterval(this.timerInterval);
+        this.setState({timerIsUpdated: false});
       }
       this.setState ({
         timerIsTiming: !this.state.timerIsTiming,
@@ -118,8 +122,12 @@ export default class Buttons extends React.Component {
    clearInterval(this.timerInterval);
    this.setState({
      timerIsTiming: false,
-     isTimerReset: true,
+     editingMode: true,
    });
+  }
+
+  startFunction = timerMode => {
+    this.startStop(timerMode);
   }
 
   render() {
@@ -127,6 +135,10 @@ export default class Buttons extends React.Component {
     const alarmOn = this.state.alarmOn;
     let leftButtonText;
     let currentTime;
+
+    if(this.state.timerTime > 59990) {
+      this.setState({timerTime: 59990})
+    }
 
     if(timerMode && (this.state.timerTime === 0)) {
       currentTime = this.state.timerTime;
@@ -150,10 +162,12 @@ export default class Buttons extends React.Component {
           timerMode = {timerMode}
           timerIsTiming = {this.state.timerIsTiming}
           isTimerReset = {this.state.isTimerReset}
+          editingMode = {this.state.editingMode}
           timerIsUpdated = {this.state.timerIsUpdated}
           typingCallback={this.typeFunction}
           editingCallback={this.enableTimerEditing}
-          resetCallback={this.resetTimerValues}/>
+          resetCallback={this.resetTimerValues}
+          submitCallback={this.startFunction}/>
         <div className="container">
           <button className="button" onClick={() => this.startStop(timerMode)}>
             {leftButtonText}
