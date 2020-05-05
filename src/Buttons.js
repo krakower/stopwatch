@@ -12,7 +12,8 @@ export default class Buttons extends React.Component {
       timerTime: 300,
       stopwatchTime: 0,
       alarmOn: false,
-      isTimerReset: false,
+      isTimerReset: true,
+      timerIsUpdated: true,
     };
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
@@ -22,6 +23,7 @@ export default class Buttons extends React.Component {
     if(timerMode) {
       this.setState ({
         isTimerReset: false,
+        timerIsUpdated: false,
       });
       if(this.state.timerTime === 0) {
         this.setState ({
@@ -79,9 +81,9 @@ export default class Buttons extends React.Component {
       clearInterval(this.timerInterval);
       this.setState({
         timerIsTiming: false,
-        //timerTime: 300,
         alarmOn: false,
         isTimerReset: true,
+        timerIsUpdated: false,
       })
     } else {
       clearInterval(this.stopwatchInterval);
@@ -93,6 +95,13 @@ export default class Buttons extends React.Component {
   }
 
 
+  resetTimerValues = (inputMinutes, inputSeconds) => {
+    this.setState({
+      timerTime: (parseInt(inputMinutes)*60 + parseInt(inputSeconds)) * 10,
+      timerIsUpdated: true,
+    })
+  }
+
   typeFunction = typedValue => {
     this.setState({
       timerTime: typedValue,
@@ -103,7 +112,15 @@ export default class Buttons extends React.Component {
    if (event.key === 'Enter') {
      this.startStop();
    }
- };
+  }
+
+  enableTimerEditing = () => {
+   clearInterval(this.timerInterval);
+   this.setState({
+     timerIsTiming: false,
+     isTimerReset: true,
+   });
+  }
 
   render() {
     const timerMode = this.props.timerMode;
@@ -131,15 +148,17 @@ export default class Buttons extends React.Component {
         <Display
           currentTime = {currentTime}
           timerMode = {timerMode}
-          typingCallback={this.typeFunction}
-          submitCallback={this.startStop}
           timerIsTiming = {this.state.timerIsTiming}
-          isTimerReset = {this.state.isTimerReset}/>
+          isTimerReset = {this.state.isTimerReset}
+          timerIsUpdated = {this.state.timerIsUpdated}
+          typingCallback={this.typeFunction}
+          editingCallback={this.enableTimerEditing}
+          resetCallback={this.resetTimerValues}/>
         <div className="container">
-          <button onClick={() => this.startStop(timerMode)}>
+          <button className="button" onClick={() => this.startStop(timerMode)}>
             {leftButtonText}
           </button>
-          <button onClick={() => this.reset(timerMode)}>
+          <button className="button" onClick={() => this.reset(timerMode)}>
               Reset
           </button>
         </div>
