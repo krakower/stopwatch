@@ -1,7 +1,6 @@
 import React from "react";
 import Display from './Display.js';
 import Alarm from './Alarm.js';
-import TypedInput from './TypedInput.js'
 
 export default class Buttons extends React.Component {
 
@@ -13,12 +12,17 @@ export default class Buttons extends React.Component {
       timerTime: 300,
       stopwatchTime: 0,
       alarmOn: false,
+      isTimerReset: false,
     };
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   startStop(timerMode) {
       //timer functionality
     if(timerMode) {
+      this.setState ({
+        isTimerReset: false,
+      });
       if(this.state.timerTime === 0) {
         this.setState ({
           alarmOn: false,
@@ -75,8 +79,9 @@ export default class Buttons extends React.Component {
       clearInterval(this.timerInterval);
       this.setState({
         timerIsTiming: false,
-        timerTime: 300,
+        //timerTime: 300,
         alarmOn: false,
+        isTimerReset: true,
       })
     } else {
       clearInterval(this.stopwatchInterval);
@@ -89,9 +94,16 @@ export default class Buttons extends React.Component {
 
 
   typeFunction = typedValue => {
-        this.setState({timerTime: typedValue});
+    this.setState({
+      timerTime: typedValue,
+    });
   }
 
+  handleKeyPress = event => {
+   if (event.key === 'Enter') {
+     this.startStop();
+   }
+ };
 
   render() {
     const timerMode = this.props.timerMode;
@@ -116,7 +128,13 @@ export default class Buttons extends React.Component {
 
     return (
       <div className="container">
-        <Display currentTime = {currentTime} timerMode = {timerMode}/>
+        <Display
+          currentTime = {currentTime}
+          timerMode = {timerMode}
+          typingCallback={this.typeFunction}
+          submitCallback={this.startStop}
+          timerIsTiming = {this.state.timerIsTiming}
+          isTimerReset = {this.state.isTimerReset}/>
         <div className="container">
           <button onClick={() => this.startStop(timerMode)}>
             {leftButtonText}
@@ -126,23 +144,7 @@ export default class Buttons extends React.Component {
           </button>
         </div>
         <Alarm alarmOn = {alarmOn}/>
-        <TypedInput
-          timerMode={(timerMode)}
-          typingCallback={this.typeFunction}
-        />
       </div>
     )
   }
 }
-
-
-//<StopWatch
-//  stopwatchIsDisplayed = {!this.props.timerMode}
-//  isTiming = {this.state.stopwatchIsTiming}
-//  isReset = {this.state.stopwatchReset}
-///>
-//<Timer
-//  timerIsDisplayed = {this.props.timerMode}
-//  isTiming = {this.state.timerIsTiming}
-//  isReset = {this.state.timerReset}
-///>
