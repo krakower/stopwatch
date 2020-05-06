@@ -1,6 +1,8 @@
 import React from "react";
 import Display from './Display.js';
 import Alarm from './Alarm.js';
+import History from './History.js';
+
 
 export default class Buttons extends React.Component {
 
@@ -13,9 +15,11 @@ export default class Buttons extends React.Component {
       stopwatchTime: 0,
       alarmOn: false,
       isTimerReset: true,
+      isStopwatchReset: true,
       timerIsUpdated: true,
       timerIsEdited: false,
       editingMode: false,
+      lapTime: 0,
     };
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
@@ -48,9 +52,13 @@ export default class Buttons extends React.Component {
         this.stopwatchInterval = setInterval(() => this.tick('stopwatchTime'), 100);
       } else {
         clearInterval(this.stopwatchInterval);
+        this.setState({
+          lapTime: 0,
+        });
       }
       this.setState ({
         stopwatchIsTiming: !this.state.stopwatchIsTiming,
+        isStopwatchReset: false,
       });
     }
   }
@@ -89,13 +97,22 @@ export default class Buttons extends React.Component {
         isTimerReset: true,
         timerIsUpdated: false,
       })
-    } else {
+    } else if(!this.state.stopwatchIsTiming){
       clearInterval(this.stopwatchInterval);
       this.setState({
         stopwatchIsTiming: false,
         stopwatchTime: 0,
+        isStopwatchReset: true,
       })
+    } else {
+      this.lapFunction(); //record lap
     }
+  }
+
+  lapFunction = () => {
+    this.setState({
+      lapTime: parseInt(this.state.stopwatchTime),
+    })
   }
 
 
@@ -134,6 +151,7 @@ export default class Buttons extends React.Component {
     const timerMode = this.props.timerMode;
     const alarmOn = this.state.alarmOn;
     let leftButtonText;
+    let rightButtonText;
     let currentTime;
 
     if(this.state.timerTime > 59990) {
@@ -142,17 +160,22 @@ export default class Buttons extends React.Component {
 
     if(timerMode && (this.state.timerTime === 0)) {
       currentTime = this.state.timerTime;
-      leftButtonText = 'ok'
+      leftButtonText = 'ok';
+      rightButtonText = 'reset';
     } else if(timerMode) {
       currentTime = this.state.timerTime;
+      rightButtonText = 'reset';
       this.state.timerIsTiming
       ? leftButtonText = 'stop'
       : leftButtonText = 'start';
+    } else if(this.state.stopwatchIsTiming) {
+      currentTime = this.state.stopwatchTime;
+      leftButtonText = 'stop';
+      rightButtonText = 'lap';
     } else {
       currentTime = this.state.stopwatchTime;
-      this.state.stopwatchIsTiming
-      ? leftButtonText = 'stop'
-      : leftButtonText = 'start';
+      leftButtonText = 'start'
+      rightButtonText = 'reset';
     }
 
     return (
@@ -173,10 +196,14 @@ export default class Buttons extends React.Component {
             {leftButtonText}
           </button>
           <button className="button" onClick={() => this.reset(timerMode)}>
-              Reset
+              {rightButtonText}
           </button>
         </div>
         <Alarm alarmOn = {alarmOn}/>
+        <History
+          currentTime = {this.state.stopwatchTime}
+          lapTime = {this.state.lapTime}
+          isStopwatchReset = {this.state.isStopwatchReset}/>
       </div>
     )
   }

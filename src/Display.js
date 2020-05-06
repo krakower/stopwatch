@@ -74,7 +74,7 @@ export default class Display extends React.Component {
     const timerMode = this.props.timerMode;
 
     let minutes = Math.floor(currentTime/600);
-    let seconds = Math.ceil((currentTime % 600)/10);
+    let seconds = Math.floor((currentTime % 600)/10);
     const deciseconds = Math.floor(currentTime % 10);
 
     if(seconds < 10) {

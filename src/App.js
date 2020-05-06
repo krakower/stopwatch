@@ -6,7 +6,7 @@ class Selector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      timerMode: true,
+      timerMode: false,
     };
   }
 
