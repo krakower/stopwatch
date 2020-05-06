@@ -38,7 +38,7 @@ export default class Buttons extends React.Component {
         })
         return;
       } else if(!this.state.timerIsTiming) {
-        this.timerInterval = setInterval(() => this.tick('timerTime'), 100);
+        this.timerInterval = setInterval(() => this.tick('timerTime'), 10);
       } else {
         clearInterval(this.timerInterval);
         this.setState({timerIsUpdated: false});
@@ -49,7 +49,7 @@ export default class Buttons extends React.Component {
       //stopwatch functionality
     } else {
       if(!this.state.stopwatchIsTiming) {
-        this.stopwatchInterval = setInterval(() => this.tick('stopwatchTime'), 100);
+        this.stopwatchInterval = setInterval(() => this.tick('stopwatchTime'), 10);
       } else {
         clearInterval(this.stopwatchInterval);
         this.setState({
@@ -154,8 +154,8 @@ export default class Buttons extends React.Component {
     let rightButtonText;
     let currentTime;
 
-    if(this.state.timerTime > 59990) {
-      this.setState({timerTime: 59990})
+    if(this.state.timerTime > 599900) {
+      this.setState({timerTime: 599900})
     }
 
     if(timerMode && (this.state.timerTime === 0)) {

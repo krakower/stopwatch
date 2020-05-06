@@ -6,7 +6,7 @@ export default function History(props) {
   const [lapHistory, setLapHistory] = useState([new Map()]);
   const [currentLapTime, setCurrentLapTime] = useState(0);
   const [prevLapTime, setPrevLapTime] = useState(0);
-  const [lapCount, setLapCount] = useState(0);
+  const [lapCount, setLapCount] = useState(1);
   const [tableData, setTableData] = useState();
 
 
@@ -33,23 +33,35 @@ export default function History(props) {
 
 
   useEffect(() => {
-     const historyArray = Array.from(lapHistory);
+     const historyArray = Array.from(lapHistory.values());
      let newTableData = historyArray.map((lapTime,lapNumber) => {
+       let minutes = Math.floor(lapTime/6000);
+       let seconds = Math.floor((lapTime % 6000)/100);
+       let centiseconds = Math.floor(lapTime % 100);
+       if(seconds < 10) {
+         seconds = '0'.concat(seconds);
+       } else if(seconds >= 60) {
+         seconds = seconds - 60;
+         minutes = minutes + 1;
+       }
+       if(centiseconds < 10) {
+         centiseconds = '0'.concat(centiseconds);
+       }
        return (
          <tr>
-           <td>{lapNumber}</td>
-           <td>{lapTime}</td>
+           <td>{lapNumber + 1}</td>
+           <td>{minutes}:{seconds}.{centiseconds}</td>
          </tr>
        );
      });
     setTableData(newTableData);
   }, [currentLapTime]);
 
-
-
+  if(props.isStopwatchReset) {
+    return([]);
+  }
   return (
     <div>
-      hi
       <table id='lapTable'>
         <tbody>
           {tableData}
@@ -57,5 +69,4 @@ export default function History(props) {
       </table>
     </div>
   )
-
 }

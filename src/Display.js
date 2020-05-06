@@ -58,7 +58,7 @@ export default class Display extends React.Component {
 
 
   handleChange(event) {
-    this.props.typingCallback((parseInt(this.state.inputMinutes)*60 + (parseInt(this.state.inputSeconds))) * 10);
+    this.props.typingCallback((parseInt(this.state.inputMinutes)*60 + (parseInt(this.state.inputSeconds))) * 100);
   }
 
   handleSubmit(event) {
@@ -73,15 +73,19 @@ export default class Display extends React.Component {
     const currentTime = this.props.currentTime;
     const timerMode = this.props.timerMode;
 
-    let minutes = Math.floor(currentTime/600);
-    let seconds = Math.floor((currentTime % 600)/10);
-    const deciseconds = Math.floor(currentTime % 10);
+    let minutes = Math.floor(currentTime/6000);
+    let seconds = Math.floor((currentTime % 6000)/100);
+    let centiseconds = Math.floor(currentTime % 100);
 
     if(seconds < 10) {
       seconds = '0'.concat(seconds);
     } else if(seconds >= 60) {
       seconds = seconds - 60;
       minutes = minutes + 1;
+    }
+
+    if(centiseconds < 10) {
+      centiseconds = '0'.concat(centiseconds);
     }
 
 
@@ -133,7 +137,7 @@ export default class Display extends React.Component {
       return (
         <div className="container">
           <div className="clockFace">
-            {minutes}:{seconds}<span className="smallTime">.{deciseconds}</span>
+            {minutes}:{seconds}<span className="smallTime">.{centiseconds}</span>
           </div>
         </div>
       )
