@@ -11,7 +11,7 @@ export default class Buttons extends React.Component {
     this.state = {
       timerIsTiming: false,
       stopwatchIsTiming: false,
-      timerTime: 3000,
+      timerTime: 300,
       stopwatchTime: 0,
       alarmOn: false,
       isTimerReset: true,
@@ -52,9 +52,6 @@ export default class Buttons extends React.Component {
         this.stopwatchInterval = setInterval(() => this.tick('stopwatchTime'), 100);
       } else {
         clearInterval(this.stopwatchInterval);
-        this.setState({
-          lapTime: 0,
-        });
       }
       this.setState ({
         stopwatchIsTiming: !this.state.stopwatchIsTiming,
