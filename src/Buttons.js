@@ -118,7 +118,7 @@ export default class Buttons extends React.Component {
 
   resetTimerValues = (inputMinutes, inputSeconds) => {
     this.setState({
-      timerTime: (parseInt(inputMinutes)*600 + parseInt(inputSeconds)) * 10,
+      timerTime: (parseInt(inputMinutes)*600 + parseInt(inputSeconds)) * 100,
       timerIsUpdated: true,
     })
   }
