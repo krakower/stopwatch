@@ -19,7 +19,7 @@ export default class Display extends React.Component {
     if((event.keyCode >= 48 && event.keyCode <= 57)     //regular number keys
     || (event.keyCode >= 96 && event.keyCode <= 105)) { //numpad number keys
       let newInputTime;
-      if(this.state.timerIsEdited == false) {
+      if(this.state.timerIsEdited === false) {
         newInputTime  = "000" + String.fromCharCode(event.keyCode);
         this.setState({timerIsEdited: true});
       } else {
@@ -31,7 +31,7 @@ export default class Display extends React.Component {
         inputMinutes: newInputTime.slice(-4,-2),
         inputSeconds: newInputTime.slice(-2),
       })
-    } else if(event.keyCode == 8) {     //delete key
+    } else if(event.keyCode === 8) {     //delete key
         let deleteTime = "" + this.state.inputMinutes+this.state.inputSeconds;
         deleteTime = deleteTime.slice(0,-1);
         deleteTime = '0' + deleteTime;
@@ -40,7 +40,7 @@ export default class Display extends React.Component {
             inputMinutes: deleteTime.slice(0,-2),
             inputSeconds: deleteTime.slice(-2),
           });
-        } else if(deleteTime.length == 1) {
+        } else if(deleteTime.length === 1) {
           this.setState({
             inputMinutes: 0,
             inputSeconds: deleteTime.slice(-1),
@@ -51,7 +51,7 @@ export default class Display extends React.Component {
             inputSeconds: 0,
           });
         }
-    } else if(event.keyCode == 13 && this.state.inputMinutes+this.state.inputSeconds != 0) {
+    } else if(event.keyCode === 13 && this.state.inputMinutes+this.state.inputSeconds !== 0) {
       this.props.submitCallback(true);
     }
   }
@@ -73,11 +73,11 @@ export default class Display extends React.Component {
     const currentTime = this.props.currentTime;
     const timerMode = this.props.timerMode;
 
-    let minutes = Math.floor(currentTime/6000);
-    let seconds = Math.floor((currentTime % 6000)/100);
-    let timerSeconds = Math.ceil((currentTime % 6000)/100);
+    let minutes = Math.floor(currentTime/600);
+    let seconds = Math.floor((currentTime % 600)/10);
+    let timerSeconds = Math.ceil((currentTime % 600)/10);
     let timerMinutes = minutes;
-    let centiseconds = Math.floor(currentTime % 100);
+    let deciseconds = Math.floor(currentTime % 10);
 
     if(seconds < 10) {
       seconds = '0'.concat(seconds);
@@ -91,9 +91,6 @@ export default class Display extends React.Component {
       timerSeconds = timerSeconds - 60;
     }
 
-    if(centiseconds < 10) {
-      centiseconds = '0'.concat(centiseconds);
-    }
     if(minutes < 10) {
       minutes = '0'.concat(minutes);
     }
@@ -135,7 +132,7 @@ export default class Display extends React.Component {
         </div>
       )
     } else if(timerMode) {
-      this.state.timerIsEdited == true ? this.setEdited() : void(0);
+      this.state.timerIsEdited === true ? this.setEdited() : void(0);
       return (
         <div className="container">
           <div className="clockFace" onClick = {() => this.props.editingCallback()}>
@@ -147,7 +144,7 @@ export default class Display extends React.Component {
       return (
         <div className="container stopwatch">
           <div className="clockFace">
-            &nbsp;{minutes}:{seconds}<span className="smallTime">.{centiseconds}</span>
+            &nbsp;&nbsp;{minutes}:{seconds}<span className="smallTime">.{deciseconds}</span>
           </div>
         </div>
       )
