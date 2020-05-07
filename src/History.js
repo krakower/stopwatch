@@ -11,7 +11,7 @@ export default function History(props) {
 
 
   useEffect(() => {
-    if(!props.isStopwatchReset) {
+    if(props.stopwatchIsTiming) {
       setCurrentLapTime(props.currentTime - props.lapTime);
       setLapHistory(lapHistory.set(lapCount,currentLapTime));
     }

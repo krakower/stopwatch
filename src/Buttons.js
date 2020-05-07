@@ -11,7 +11,7 @@ export default class Buttons extends React.Component {
     this.state = {
       timerIsTiming: false,
       stopwatchIsTiming: false,
-      timerTime: 300,
+      timerTime: 3000,
       stopwatchTime: 0,
       alarmOn: false,
       isTimerReset: true,
@@ -201,6 +201,7 @@ export default class Buttons extends React.Component {
         </div>
         <Alarm alarmOn = {alarmOn}/>
         <History
+          stopwatchIsTiming = {this.state.stopwatchIsTiming}
           currentTime = {this.state.stopwatchTime}
           lapTime = {this.state.lapTime}
           isStopwatchReset = {this.state.isStopwatchReset}/>
