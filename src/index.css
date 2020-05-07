@@ -6,6 +6,13 @@ body {
   text-align: center;
 }
 
+.stopwatch {
+  text-align: justify;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
 .frame {
   background-color: #c2c2d6;
   border: 1px solid black;
@@ -81,6 +88,37 @@ button.selector.highlighted {
 
 
 .patrick {
-  height: 80%;
-  width: 80%;
+  height: 90%;
+  width: 90%;
+}
+
+
+
+table {
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 10px;
+  background-color: #c2c2d6;
+  margin-top: 15px;
+  margin-left: 87.5px;
+  width: 250px;
+}
+
+tbody {
+  height: 254px;
+  width: 250px;
+  display: block;
+  overflow: auto;
+}
+
+td {
+  border: 1px solid black;
+  width: 100px;
+  border-radius: 0px;
+  margin: 10px;
+  padding: 10px;
+  background-color: white;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  font-size: 16px;
 }

@@ -160,22 +160,22 @@ export default class Buttons extends React.Component {
 
     if(timerMode && (this.state.timerTime === 0)) {
       currentTime = this.state.timerTime;
-      leftButtonText = 'ok';
-      rightButtonText = 'reset';
+      leftButtonText = 'Ok';
+      rightButtonText = 'Reset';
     } else if(timerMode) {
       currentTime = this.state.timerTime;
-      rightButtonText = 'reset';
+      rightButtonText = 'Reset';
       this.state.timerIsTiming
-      ? leftButtonText = 'stop'
-      : leftButtonText = 'start';
+      ? leftButtonText = 'Stop'
+      : leftButtonText = 'Start';
     } else if(this.state.stopwatchIsTiming) {
       currentTime = this.state.stopwatchTime;
-      leftButtonText = 'stop';
-      rightButtonText = 'lap';
+      leftButtonText = 'Stop';
+      rightButtonText = 'Lap';
     } else {
       currentTime = this.state.stopwatchTime;
-      leftButtonText = 'start'
-      rightButtonText = 'reset';
+      leftButtonText = 'Start'
+      rightButtonText = 'Reset';
     }
 
     return (

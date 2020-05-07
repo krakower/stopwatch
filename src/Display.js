@@ -75,6 +75,8 @@ export default class Display extends React.Component {
 
     let minutes = Math.floor(currentTime/6000);
     let seconds = Math.floor((currentTime % 6000)/100);
+    let timerSeconds = Math.ceil((currentTime % 6000)/100);
+    let timerMinutes = minutes;
     let centiseconds = Math.floor(currentTime % 100);
 
     if(seconds < 10) {
@@ -84,8 +86,16 @@ export default class Display extends React.Component {
       minutes = minutes + 1;
     }
 
+    if(timerSeconds >= 60) {
+      timerMinutes = timerMinutes + 1;
+      timerSeconds = timerSeconds - 60;
+    }
+
     if(centiseconds < 10) {
       centiseconds = '0'.concat(centiseconds);
+    }
+    if(minutes < 10) {
+      minutes = '0'.concat(minutes);
     }
 
 
@@ -129,15 +139,15 @@ export default class Display extends React.Component {
       return (
         <div className="container">
           <div className="clockFace" onClick = {() => this.props.editingCallback()}>
-            {minutes}<span className="smallTime">m</span> {seconds}<span className="smallTime">s</span>
+            {timerMinutes}<span className="smallTime">m</span> {timerSeconds}<span className="smallTime">s</span>
           </div>
         </div>
       )
     } else {
       return (
-        <div className="container">
+        <div className="container stopwatch">
           <div className="clockFace">
-            {minutes}:{seconds}<span className="smallTime">.{centiseconds}</span>
+            &nbsp;{minutes}:{seconds}<span className="smallTime">.{centiseconds}</span>
           </div>
         </div>
       )
