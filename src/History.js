@@ -64,9 +64,11 @@ export default function History(props) {
     setTableData(newTableData);
   }, [currentLapTime]);
 
-  if(props.isStopwatchReset) {
+  if(props.isStopwatchReset || props.timerMode) {
     return([]);
   }
+
+
   return (
     <div className="container history">
       <table>

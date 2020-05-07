@@ -201,6 +201,7 @@ export default class Buttons extends React.Component {
         </div>
         <Alarm alarmOn = {alarmOn}/>
         <History
+          timerMode = {this.props.timerMode}
           stopwatchIsTiming = {this.state.stopwatchIsTiming}
           currentTime = {this.state.stopwatchTime}
           lapTime = {this.state.lapTime}
