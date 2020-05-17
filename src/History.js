@@ -41,13 +41,13 @@ export default function History(props) {
        let minutes = Math.floor(lapTime/600);
        let seconds = Math.floor((lapTime % 600)/10);
        let deciseconds = Math.floor(lapTime % 10);
+
        if(seconds < 10) {
          seconds = '0'.concat(seconds);
        } else if(seconds >= 60) {
          seconds = seconds - 60;
          minutes = minutes + 1;
        }
-
        if(minutes < 10) {
          minutes = '0'.concat(minutes);
        }
@@ -60,7 +60,7 @@ export default function History(props) {
        );
      });
     setTableData(newTableData);
-  }, [currentLapTime]);
+  }, [currentLapTime, lapHistory]);
 
   if(props.isStopwatchReset || props.timerMode) {
     return([]);

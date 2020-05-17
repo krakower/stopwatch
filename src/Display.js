@@ -58,7 +58,7 @@ export default class Display extends React.Component {
 
 
   handleChange(event) {
-    this.props.typingCallback((parseInt(this.state.inputMinutes)*60 + (parseInt(this.state.inputSeconds))) * 100);
+    this.props.typingCallback((parseInt(this.state.inputMinutes)*60 + (parseInt(this.state.inputSeconds))) * 10);
   }
 
   handleSubmit(event) {
@@ -117,7 +117,7 @@ export default class Display extends React.Component {
         className = "container clockFace grayedOut";
       }
       return (
-        <div onClick = {/*TODO*/0}>
+        <div>
           <form onSubmit={this.handleSubmit} autocomplete="off">
             <input
               className={className}

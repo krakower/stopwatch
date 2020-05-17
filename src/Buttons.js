@@ -98,8 +98,9 @@ export default class Buttons extends React.Component {
       clearInterval(this.stopwatchInterval);
       this.setState({
         stopwatchIsTiming: false,
-        stopwatchTime: 0,
         isStopwatchReset: true,
+        stopwatchTime: 0,
+        lapTime: 0,
       })
     } else {
       this.lapFunction(); //record lap
